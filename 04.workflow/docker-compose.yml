@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    container_name: react
+    build:
+      context: . # Location of the Dockerfile
+      dockerfile: Dockerfile.dev # Name of the Dockerfile
+    ports:
+      - "3000:3000" # Map port outside the container to the port running inside the container
+    volumes:
+      - /app/node_modules
+      - .:/app # Map system working directory i.e. "." to the directory inside the container i.e. "/app"
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]

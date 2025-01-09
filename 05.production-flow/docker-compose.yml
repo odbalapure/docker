@@ -1,17 +1,16 @@
 version: '3'
 services:
   web:
-    container_name: react
-    build: .
+    container_name: react-ngnix
+    build:
+      context: .
+      dockerfile: Dockerfile  # Production Dockerfile (Nginx)
     ports:
-      - "3000:80" # 80 is the default port for nginx
-    volumes:
-      - /app/node_modules
-      - .:/app
+      - "3000:80"  # Map port 3000 (host) to port 80 (Nginx inside container)
   test:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev  # Development Dockerfile (for running tests)
     volumes:
       - /app/node_modules
       - .:/app
